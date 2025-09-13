@@ -1,0 +1,2 @@
+# https://docs.suricata.io/en/latest/file-extraction/file-extraction.html#rules
+alert http any any -> any any (msg:"FILE store all"; filestore; sid:1; rev:1;)

@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: (c) 2025 Crown Copyright, Government of Canada (Canadian Centre for Cyber Security / Communications Security Establishment)
+# SPDX-License-Identifier: MIT
+
+FROM opensuse/tumbleweed:latest AS suricata
+
+RUN zypper --quiet --non-interactive refresh \
+ && zypper --quiet --non-interactive install --no-recommends \
+        clamav \
+        python3-pip \
+        suricata \
+        zstd \
+ && zypper --quiet --non-interactive clean
+
+RUN pip install --break-system-packages cart && freshclam && suricata-update
+
+COPY config/suricata.yaml /etc/suricata/suricata.yaml
+COPY config/file-store-all.rules /etc/suricata/rules/file-store-all.rules
+
+WORKDIR /app
+
+COPY docker/entrypoint.sh /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["/data/pcaps", "/data/logs", "/data/INFECTED"]
