@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Data Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-network-wired"></i> Network Data Analyzer</h1>
+                <p>Analyze your network data with AI-powered insights</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h2>Upload Network Data</h2>
+                    <p>Upload a JSON file containing your network data for AI analysis</p>
+                    
+                    <div class="file-upload">
+                        <input type="file" id="fileInput" accept=".json" hidden>
+                        <button id="uploadBtn" class="upload-btn">
+                            <i class="fas fa-file-upload"></i>
+                            Choose JSON File
+                        </button>
+                        <div id="fileName" class="file-name"></div>
+                    </div>
+                    
+                    <button id="analyzeBtn" class="analyze-btn" disabled>
+                        <i class="fas fa-brain"></i>
+                        Analyze with AI
+                    </button>
+                    
+                    <div class="external-tools">
+                        <button id="malcolmBtn" class="malcolm-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Malcolm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loadingSection" class="loading-section hidden">
+                <div class="loading-card">
+                    <div class="spinner"></div>
+                    <h3>Analyzing Network Data...</h3>
+                    <p>Our AI is processing your network data and generating insights. This may take a few moments.</p>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="results-section hidden">
+                <div class="results-header">
+                    <h2><i class="fas fa-chart-line"></i> Analysis Results</h2>
+                    <button id="downloadBtn" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        Download Report
+                    </button>
+                </div>
+                
+                <div class="results-grid">
+                    <div class="stats-card">
+                        <h3><i class="fas fa-database"></i> Dataset Overview</h3>
+                        <div id="datasetOverview" class="stats-content"></div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-shield-alt"></i> Security Analysis</h3>
+                        <div id="securityAnalysis" class="stats-content"></div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Detected Anomalies</h3>
+                        <div id="detectedAnomalies" class="stats-content"></div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-users"></i> Top Talkers</h3>
+                        <div id="topTalkers" class="stats-content"></div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-network-wired"></i> Traffic Patterns</h3>
+                        <div id="trafficPatterns" class="stats-content"></div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-chart-bar"></i> Top Statistics</h3>
+                        <div id="topStatistics" class="stats-content"></div>
+                    </div>
+                </div>
+
+                <div class="visualization-section">
+                    <div class="stats-card">
+                        <h3><i class="fas fa-chart-line"></i> Event Trends</h3>
+                        <div id="eventTrends" class="stats-content">
+                            <canvas id="trendsChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><i class="fas fa-robot"></i> AI Analysis Report</h3>
+                    <div id="aiAnalysis" class="analysis-content"></div>
+                </div>
+            </div>
+
+            <div id="errorSection" class="error-section hidden">
+                <div class="error-card">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Analysis Failed</h3>
+                    <p id="errorMessage">Something went wrong during the analysis.</p>
+                    <button id="retryBtn" class="retry-btn">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Network Data Analyzer. Powered by Cohere AI.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

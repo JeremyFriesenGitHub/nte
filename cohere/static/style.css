@@ -1,0 +1,446 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header-content h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header-content p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Cards */
+.upload-card, .sample-card, .loading-card, .error-card, .stats-card, .analysis-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upload-card:hover, .sample-card:hover, .stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Upload Section */
+.upload-section {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-card {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.upload-card h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.upload-card p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.file-upload {
+    margin-bottom: 20px;
+}
+
+.upload-btn, .analyze-btn, .sample-btn, .download-btn, .retry-btn, .malcolm-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-btn:hover, .analyze-btn:hover, .sample-btn:hover, .download-btn:hover, .retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.analyze-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* External Tools Section */
+.external-tools {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.malcolm-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    font-size: 1rem;
+    padding: 12px 25px;
+}
+
+.malcolm-btn:hover {
+    background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* Anomaly Styling */
+.anomaly-high {
+    border-left: 4px solid #dc3545;
+    background-color: #f8d7da;
+    padding-left: 10px;
+}
+
+.anomaly-medium {
+    border-left: 4px solid #ffc107;
+    background-color: #fff3cd;
+    padding-left: 10px;
+}
+
+.anomaly-low {
+    border-left: 4px solid #28a745;
+    background-color: #d4edda;
+    padding-left: 10px;
+}
+
+/* Chart.js Canvas Styling */
+#trendsChart {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+.stats-content canvas {
+    max-width: 100%;
+    height: 400px;
+}
+
+.file-name {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #333;
+    font-weight: 500;
+    display: none;
+}
+
+.file-name.show {
+    display: block;
+}
+
+/* Sample Section */
+.sample-section {
+    display: flex;
+    justify-content: center;
+}
+
+.sample-card {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.sample-card h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.sample-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Loading Section */
+.loading-section {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-card {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-card h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.loading-card p {
+    color: #666;
+}
+
+/* Results Section */
+.results-section {
+    width: 100%;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.results-header h2 {
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.visualization-section {
+    margin-bottom: 30px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.chart-content {
+    min-height: 300px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.stats-card h3 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.stats-content {
+    color: #666;
+    line-height: 1.8;
+}
+
+.stats-content .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 5px 0;
+}
+
+.stat-label {
+    font-weight: 500;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.analysis-card {
+    width: 100%;
+}
+
+.analysis-card h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.analysis-content {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.analysis-content h4 {
+    color: #333;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.analysis-content ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.analysis-content li {
+    margin-bottom: 5px;
+}
+
+/* Error Section */
+.error-section {
+    display: flex;
+    justify-content: center;
+}
+
+.error-card {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    border-left: 5px solid #e74c3c;
+}
+
+.error-icon {
+    font-size: 3rem;
+    color: #e74c3c;
+    margin-bottom: 15px;
+}
+
+.error-card h3 {
+    color: #e74c3c;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.error-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.retry-btn:hover {
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .header-content p {
+        font-size: 1rem;
+    }
+    
+    .upload-card, .sample-card, .loading-card, .error-card, .stats-card, .analysis-card {
+        padding: 20px;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .upload-btn, .analyze-btn, .sample-btn, .download-btn, .retry-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .header-content h1 {
+        font-size: 1.8rem;
+    }
+}
