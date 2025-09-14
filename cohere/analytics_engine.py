@@ -73,12 +73,12 @@ class NetworkAnalyticsEngine:
                 CREATE OR REPLACE TABLE {table_name} AS 
                 SELECT 
                     timestamp,
-                    flow_id,
+                    COALESCE(flow_id, 0) as flow_id,
                     event_type,
                     src_ip,
-                    src_port,
+                    COALESCE(src_port, 0) as src_port,
                     dest_ip,
-                    dest_port,
+                    COALESCE(dest_port, 0) as dest_port,
                     proto,
                     COALESCE(alert.signature, 'Unknown') as signature,
                     COALESCE(alert.severity, 0) as severity,
@@ -86,7 +86,9 @@ class NetworkAnalyticsEngine:
                     COALESCE(flow.bytes_toserver, 0) as bytes_sent,
                     COALESCE(flow.bytes_toclient, 0) as bytes_received,
                     COALESCE(flow.pkts_toserver, 0) as pkts_sent,
-                    COALESCE(flow.pkts_toclient, 0) as pkts_received
+                    COALESCE(flow.pkts_toclient, 0) as pkts_received,
+                    COALESCE(http.http_user_agent, '') as http_user_agent,
+                    COALESCE(payload, '') as payload
                 FROM {table_name}_raw
                 """
                 self.conn.execute(processed_query)
@@ -160,10 +162,10 @@ class NetworkAnalyticsEngine:
             
             # Handle timestamp
             if 'timestamp' in df.columns:
-                results["time_range"] = {
-                    "earliest": str(df['timestamp'].min()),
-                    "latest": str(df['timestamp'].max())
-                }
+                df['timestamp'] = pd.to_datetime(df['timestamp'])
+                earliest = df['timestamp'].min().strftime('%Y-%m-%d %H:%M:%S')
+                latest = df['timestamp'].max().strftime('%Y-%m-%d %H:%M:%S')
+                results["time_range"] = f"{earliest} to {latest}"
             
             # Handle IP addresses
             if 'src_ip' in df.columns:
@@ -207,25 +209,33 @@ class NetworkAnalyticsEngine:
                 "top_source_ips": [],
                 "suspicious_ports": [],
                 "failed_connections": 0,
-                "anomaly_detection": []
+                "anomaly_detection": [],
+                "data_science_anomalies": []
             }
             
-            # Alert severity analysis - check if event_type and alert columns exist
-            if 'event_type' in df.columns and 'alert' in df.columns:
+            if len(df) == 0:
+                return results
+            
+            # Extract alert data from nested JSON structure
+            if 'event_type' in df.columns:
                 alert_df = df[df['event_type'] == 'alert'].copy()
+                
                 if len(alert_df) > 0:
-                    severity_counts = alert_df['alert'].apply(lambda x: x.get('severity') if isinstance(x, dict) else None).value_counts()
-                    results["alert_severity"] = [{'severity': k, 'count': v} for k, v in severity_counts.items() if k is not None]
+                    # Extract severity from nested alert structure
+                    if 'severity' in df.columns:
+                        severity_counts = alert_df['severity'].value_counts()
+                        results["alert_severity"] = [{'severity': k, 'count': v} for k, v in severity_counts.items()]
                     
-                    # Top signatures
-                    signature_counts = alert_df['alert'].apply(lambda x: x.get('signature') if isinstance(x, dict) else None).value_counts().head(10)
-                    results["top_signatures"] = [{'signature': k, 'count': v} for k, v in signature_counts.items() if k is not None]
+                    # Extract signatures
+                    if 'signature' in df.columns:
+                        signature_counts = alert_df['signature'].value_counts().head(10)
+                        results["top_signatures"] = [{'signature': k, 'count': v} for k, v in signature_counts.items()]
                     
-                    # Failed connections (attacks/scans)
-                    results["failed_connections"] = len(alert_df[alert_df['alert'].apply(
-                        lambda x: isinstance(x, dict) and 
-                        ('Attack' in str(x.get('category', '')) or 'Scan' in str(x.get('category', '')))
-                    )])
+                    # Count failed connections based on alert category
+                    if 'alert_category' in df.columns:
+                        attack_keywords = ['Attack', 'Scan', 'Trojan', 'Malware']
+                        failed_connections = alert_df['alert_category'].str.contains('|'.join(attack_keywords), case=False, na=False).sum()
+                        results["failed_connections"] = int(failed_connections)
             
             # Top source IPs
             if 'src_ip' in df.columns:
@@ -281,17 +291,20 @@ class NetworkAnalyticsEngine:
             else:
                 df['hour'] = 0
             
-            # Extract flow data if available
-            if 'flow' in df.columns:
-                df['bytes_sent'] = df['flow'].apply(lambda x: x.get('bytes_toserver', 0) if isinstance(x, dict) else 0)
-                df['bytes_received'] = df['flow'].apply(lambda x: x.get('bytes_toclient', 0) if isinstance(x, dict) else 0)
+            # Extract flow data - use direct columns if available
+            if 'bytes_sent' in df.columns:
+                df['bytes_sent'] = pd.to_numeric(df['bytes_sent'], errors='coerce').fillna(0)
             else:
                 df['bytes_sent'] = 0
+                
+            if 'bytes_received' in df.columns:
+                df['bytes_received'] = pd.to_numeric(df['bytes_received'], errors='coerce').fillna(0)
+            else:
                 df['bytes_received'] = 0
             
             # Extract payload size
             if 'payload' in df.columns:
-                df['payload_size'] = df['payload'].apply(lambda x: len(str(x)) if x else 0)
+                df['payload_size'] = df['payload'].apply(lambda x: len(str(x)) if pd.notna(x) else 0)
             else:
                 df['payload_size'] = 0
             
@@ -301,15 +314,17 @@ class NetworkAnalyticsEngine:
             else:
                 df['is_alert'] = 0
             
-            # Extract user agent
-            if 'http' in df.columns:
-                df['user_agent'] = df['http'].apply(lambda x: x.get('http_user_agent', '') if isinstance(x, dict) else '')
+            # Extract user agent from http_user_agent column if available
+            if 'http_user_agent' in df.columns:
+                df['user_agent'] = df['http_user_agent'].fillna('')
             else:
                 df['user_agent'] = ''
             
             # Ensure dest_port exists
             if 'dest_port' not in df.columns:
                 df['dest_port'] = 80  # Default port
+            else:
+                df['dest_port'] = pd.to_numeric(df['dest_port'], errors='coerce').fillna(80)
             
             anomalies = []
             
@@ -390,10 +405,11 @@ class NetworkAnalyticsEngine:
                 # Rolling window anomalies
                 window_size = min(3, len(hourly_stats) // 2)
                 rolling_mean = hourly_stats['event_count'].rolling(window=window_size, center=True).mean()
-                rolling_std = hourly_stats['event_count'].rolling(window=window_size, center=True).std()
+                rolling_std = hourly_stats['event_count'].rolling(window=window_size, center=True).std().fillna(1)
                 
                 anomaly_threshold = 2.0
-                time_anomalies = np.sum(np.abs(hourly_stats['event_count'] - rolling_mean) > anomaly_threshold * rolling_std)
+                deviations = np.abs(hourly_stats['event_count'] - rolling_mean)
+                time_anomalies = np.sum(deviations > anomaly_threshold * rolling_std)
                 
                 if time_anomalies > 0:
                     anomalies.append({
@@ -456,17 +472,19 @@ class NetworkAnalyticsEngine:
             })
         
         # High-frequency sources (potential scanning)
-        source_counts = df['src_ip'].value_counts()
-        high_freq_threshold = source_counts.quantile(0.95)  # Top 5%
-        high_freq_sources = source_counts[source_counts > high_freq_threshold]
-        
-        if len(high_freq_sources) > 0:
-            anomalies.append({
-                "anomaly_type": "high_frequency_sources",
-                "count": len(high_freq_sources),
-                "description": f"Source IPs with unusually high activity (top 5%)",
-                "max_events": int(high_freq_sources.max())
-            })
+        if 'src_ip' in df.columns:
+            source_counts = df['src_ip'].value_counts()
+            if len(source_counts) > 0:
+                high_freq_threshold = source_counts.quantile(0.95)  # Top 5%
+                high_freq_sources = source_counts[source_counts > high_freq_threshold]
+                
+                if len(high_freq_sources) > 0:
+                    anomalies.append({
+                        "anomaly_type": "high_frequency_sources",
+                        "count": len(high_freq_sources),
+                        "description": f"Source IPs with unusually high activity (top 5%)",
+                        "max_events": int(high_freq_sources.max())
+                    })
         
         return anomalies
     
@@ -500,14 +518,14 @@ class NetworkAnalyticsEngine:
             if len(df) == 0:
                 return results
             
-            # Force create all traffic patterns with actual data
-            
             # Hourly distribution - use timestamp if available, otherwise create default
             if 'timestamp' in df.columns:
                 df_copy = df.copy()
                 df_copy['timestamp'] = pd.to_datetime(df_copy['timestamp'])
                 df_copy['hour'] = df_copy['timestamp'].dt.hour
                 hourly_distribution = df_copy.groupby('hour').size().reset_index(name='event_count')
+                # Sort by event count to show peak hours first
+                hourly_distribution = hourly_distribution.sort_values('event_count', ascending=False)
                 results["hourly_distribution"] = hourly_distribution.to_dict('records')
                 
                 # Event type trends
@@ -534,15 +552,26 @@ class NetworkAnalyticsEngine:
                     protocol_distribution.columns = ['protocol', 'count']
                     results["protocol_distribution"] = protocol_distribution.to_dict('records')
             
-            # Top talkers - force create if both IPs exist
+            # Top talkers - use bytes if available, otherwise event count
             if 'src_ip' in df.columns and 'dest_ip' in df.columns:
-                talker_counts = df.groupby(['src_ip', 'dest_ip']).size()
-                if len(talker_counts) > 0:
-                    top_talkers = talker_counts.reset_index(name='total_events')
-                    top_talkers = top_talkers.nlargest(10, 'total_events')
+                if 'bytes_sent' in df.columns and 'bytes_received' in df.columns:
+                    # Calculate total bytes per connection
+                    talker_stats = df.groupby(['src_ip', 'dest_ip']).agg({
+                        'bytes_sent': 'sum',
+                        'bytes_received': 'sum',
+                        'src_ip': 'size'  # Count of events
+                    }).reset_index()
+                    talker_stats.columns = ['src_ip', 'dest_ip', 'bytes_sent', 'bytes_received', 'total_events']
+                    talker_stats['total_bytes'] = talker_stats['bytes_sent'] + talker_stats['bytes_received']
+                    top_talkers = talker_stats.nlargest(10, 'total_bytes')
+                else:
+                    # Fallback to event count
+                    talker_counts = df.groupby(['src_ip', 'dest_ip']).size().reset_index(name='total_events')
+                    top_talkers = talker_counts.nlargest(10, 'total_events')
                     top_talkers['bytes_sent'] = 0
                     top_talkers['bytes_received'] = 0
-                    results["top_talkers_by_traffic"] = top_talkers.to_dict('records')
+                
+                results["top_talkers_by_traffic"] = top_talkers.to_dict('records')
             
             # Alert generators - force create if event_type and src_ip exist
             if 'event_type' in df.columns and 'src_ip' in df.columns:

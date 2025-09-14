@@ -116,7 +116,7 @@ Please provide a comprehensive security assessment including:
 4. **Recommendations**: Provide specific, actionable security recommendations
 5. **Priority Actions**: List immediate actions that should be taken
 
-Focus on practical insights that a security team can act upon. Highlight any anomalies or concerning patterns in the data.
+Focus on practical insights that a security team can act upon. Highlight any anomalies or concerning patterns in the data. Format your output in HTML.
 """
         
         return prompt

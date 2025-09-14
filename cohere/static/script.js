@@ -11,7 +11,6 @@ class NetworkAnalyzer {
         this.uploadBtn = document.getElementById('uploadBtn');
         this.fileName = document.getElementById('fileName');
         this.analyzeBtn = document.getElementById('analyzeBtn');
-        this.sampleBtn = document.getElementById('sampleBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
         this.retryBtn = document.getElementById('retryBtn');
         this.malcolmBtn = document.getElementById('malcolmBtn');
@@ -24,7 +23,6 @@ class NetworkAnalyzer {
         this.datasetOverview = document.getElementById('datasetOverview');
         this.securityAnalysis = document.getElementById('securityAnalysis');
         this.detectedAnomalies = document.getElementById('detectedAnomalies');
-        this.topTalkers = document.getElementById('topTalkers');
         this.trafficPatterns = document.getElementById('trafficPatterns');
         this.topStatistics = document.getElementById('topStatistics');
         this.eventTrends = document.getElementById('eventTrends');
@@ -35,7 +33,6 @@ class NetworkAnalyzer {
         this.uploadBtn.addEventListener('click', () => this.fileInput.click());
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         this.analyzeBtn.addEventListener('click', () => this.analyzeData());
-        this.sampleBtn.addEventListener('click', () => this.useSampleData());
         this.downloadBtn.addEventListener('click', () => this.downloadReport());
         this.retryBtn.addEventListener('click', () => this.hideError());
         this.malcolmBtn.addEventListener('click', () => this.openMalcolmApp());
@@ -133,9 +130,6 @@ class NetworkAnalyzer {
         // Display detected anomalies
         this.displayDetectedAnomalies(analysisData.analytics_results);
         
-        // Display top talkers
-        this.displayTopTalkers(analysisData.analytics_results);
-        
         // Display traffic patterns
         this.displayTrafficPatternsResults(analysisData.analytics_results);
         
@@ -182,9 +176,9 @@ class NetworkAnalyzer {
         const security = analyticsResults.security_analysis || {};
         let html = '';
         
-        if (security.alert_severity_distribution) {
+        if (security.alert_severity && security.alert_severity.length > 0) {
             html += '<h4>Alert Severity Distribution</h4>';
-            security.alert_severity_distribution.forEach(item => {
+            security.alert_severity.forEach(item => {
                 html += `
                     <div class="stat-item">
                         <span class="stat-label">Severity ${item.severity}:</span>
@@ -194,7 +188,7 @@ class NetworkAnalyzer {
             });
         }
         
-        if (security.top_signatures) {
+        if (security.top_signatures && security.top_signatures.length > 0) {
             html += '<h4>Top Alert Signatures</h4>';
             security.top_signatures.slice(0, 3).forEach(item => {
                 html += `
@@ -204,6 +198,16 @@ class NetworkAnalyzer {
                     </div>
                 `;
             });
+        }
+        
+        if (security.failed_connections > 0) {
+            html += '<h4>Security Threats</h4>';
+            html += `
+                <div class="stat-item">
+                    <span class="stat-label">Failed Connections:</span>
+                    <span class="stat-value">${security.failed_connections} attempts</span>
+                </div>
+            `;
         }
         
         this.securityAnalysis.innerHTML = html || '<p>No security data available</p>';
@@ -242,31 +246,76 @@ class NetworkAnalyzer {
 
     displayDetectedAnomalies(analyticsResults) {
         const security = analyticsResults.security_analysis || {};
-        const data = analyticsResults;
-        // Display anomalies (including least squares regression results)
         let allAnomalies = [];
         
-        // Add statistical anomalies
-        if (data.anomaly_detection && data.anomaly_detection.length > 0) {
-            allAnomalies = allAnomalies.concat(data.anomaly_detection.filter(a => a.count > 0));
+        // Add data science anomalies from security analysis
+        if (security.data_science_anomalies && security.data_science_anomalies.length > 0) {
+            allAnomalies = allAnomalies.concat(security.data_science_anomalies.filter(a => a.count > 0));
         }
         
-        // Add data science anomalies
-        if (data.data_science_anomalies && data.data_science_anomalies.length > 0) {
-            allAnomalies = allAnomalies.concat(data.data_science_anomalies.filter(a => a.count > 0));
+        // Add any other anomaly detection results
+        if (security.anomaly_detection && security.anomaly_detection.length > 0) {
+            allAnomalies = allAnomalies.concat(security.anomaly_detection.filter(a => a.count > 0));
         }
         
         let html = '';
         if (allAnomalies.length > 0) {
-            html += '<h4>🚨 Detected Anomalies:</h4>';
+            html += '<h4>🚨 Anomalies Detected:</h4>';
             allAnomalies.forEach(anomaly => {
                 const severity = this.getAnomalySeverity(anomaly.anomaly_type, anomaly.count);
+                const type = anomaly.anomaly_type.replace(/_/g, ' ').toUpperCase();
+                
+                // Create brief summary based on anomaly type with key details
+                let summary = '';
+                switch(anomaly.anomaly_type) {
+                    case 'isolation_forest':
+                        summary = `${anomaly.count} unusual patterns detected`;
+                        if (anomaly.anomaly_score) {
+                            summary += ` (score: ${anomaly.anomaly_score.toFixed(2)})`;
+                        }
+                        break;
+                    case 'dbscan_clustering':
+                        summary = `${anomaly.count} behavioral anomalies found`;
+                        if (anomaly.n_clusters) {
+                            summary += ` (${anomaly.n_clusters} clusters)`;
+                        }
+                        break;
+                    case 'z_score':
+                        summary = `${anomaly.count} statistical outliers`;
+                        if (anomaly.threshold) {
+                            summary += ` (z-score > ${anomaly.threshold})`;
+                        }
+                        break;
+                    case 'iqr':
+                        summary = `${anomaly.count} unusual traffic patterns`;
+                        break;
+                    case 'rolling_window':
+                        summary = `${anomaly.count} temporal anomalies detected`;
+                        break;
+                    case 'oversized_payload':
+                        summary = `${anomaly.count} large data transfers`;
+                        if (anomaly.max_events) {
+                            summary += ` (max: ${anomaly.max_events})`;
+                        }
+                        break;
+                    case 'suspicious_user_agent':
+                        summary = `${anomaly.count} suspicious user agents`;
+                        break;
+                    case 'rare_port':
+                        summary = `${anomaly.count} rare port activities`;
+                        if (anomaly.unique_ports) {
+                            summary += ` (${anomaly.unique_ports} ports)`;
+                        }
+                        break;
+                    case 'high_frequency_source':
+                        summary = `${anomaly.count} high-frequency sources`;
+                        break;
+                    default:
+                        summary = `${anomaly.count} anomalies detected`;
+                }
+                
                 html += `<div class="anomaly-item anomaly-${severity}">
-                    <strong>${anomaly.anomaly_type.replace(/_/g, ' ').toUpperCase()}:</strong> 
-                    ${anomaly.count} occurrences
-                    ${anomaly.description ? `<br><small>${anomaly.description}</small>` : ''}
-                    ${anomaly.outlier_hours ? `<br><small>Outlier hours: ${anomaly.outlier_hours.join(', ')}</small>` : ''}
-                    ${anomaly.max_residual ? `<br><small>Max deviation: ${anomaly.max_residual.toFixed(2)}</small>` : ''}
+                    <strong>${type}:</strong> ${summary}
                 </div>`;
             });
         } else {
@@ -276,43 +325,13 @@ class NetworkAnalyzer {
         this.detectedAnomalies.innerHTML = html;
     }
 
-    displayTopTalkers(analyticsResults) {
-        const traffic = analyticsResults.traffic_patterns || {};
-        let html = '';
-        
-        if (traffic.top_talkers_by_traffic) {
-            html += '<h4>By Traffic Volume</h4>';
-            traffic.top_talkers_by_traffic.slice(0, 3).forEach(item => {
-                html += `
-                    <div class="stat-item">
-                        <span class="stat-label">${item.src_ip} → ${item.dest_ip}:</span>
-                        <span class="stat-value">${item.total_events} events</span>
-                    </div>
-                `;
-            });
-        }
-        
-        if (traffic.top_alert_generators) {
-            html += '<h4>Alert Generators</h4>';
-            traffic.top_alert_generators.slice(0, 3).forEach(item => {
-                html += `
-                    <div class="stat-item">
-                        <span class="stat-label">${item.src_ip}:</span>
-                        <span class="stat-value">${item.alert_count} alerts</span>
-                    </div>
-                `;
-            });
-        }
-        
-        this.topTalkers.innerHTML = html || '<p>No traffic data available</p>';
-    }
 
     displayTopStatistics(analyticsResults) {
         const security = analyticsResults.security_analysis || {};
         const traffic = analyticsResults.traffic_patterns || {};
         let html = '';
         
-        if (security.suspicious_ports) {
+        if (security.suspicious_ports && security.suspicious_ports.length > 0) {
             html += '<h4>Suspicious Ports</h4>';
             security.suspicious_ports.slice(0, 3).forEach(item => {
                 html += `
@@ -324,13 +343,25 @@ class NetworkAnalyzer {
             });
         }
         
-        if (traffic.protocol_distribution) {
+        if (traffic.protocol_distribution && traffic.protocol_distribution.length > 0) {
             html += '<h4>Protocol Distribution</h4>';
             traffic.protocol_distribution.slice(0, 3).forEach(item => {
                 html += `
                     <div class="stat-item">
-                        <span class="stat-label">${item.proto}:</span>
+                        <span class="stat-label">${item.protocol}:</span>
                         <span class="stat-value">${item.count} events</span>
+                    </div>
+                `;
+            });
+        }
+        
+        if (traffic.port_analysis && traffic.port_analysis.length > 0) {
+            html += '<h4>Port Analysis</h4>';
+            traffic.port_analysis.slice(0, 3).forEach(item => {
+                html += `
+                    <div class="stat-item">
+                        <span class="stat-label">Port ${item.dest_port}:</span>
+                        <span class="stat-value">${item.connection_count} conn (${item.unique_sources} sources)</span>
                     </div>
                 `;
             });
@@ -357,22 +388,36 @@ class NetworkAnalyzer {
     }
 
     formatAnalysisText(text) {
-        // Convert markdown-like formatting to HTML
-        let formatted = text
-            .replace(/\*\*(.*?)\*\*/g, '<h4>$1</h4>')
-            .replace(/\* (.*?)(?=\n|$)/g, '<li>$1</li>')
-            .replace(/(\n|^)(\d+\. .*?)(?=\n|$)/g, '<h4>$2</h4>')
-            .replace(/\n\n/g, '</p><p>')
-            .replace(/\n/g, '<br>');
-
-        // Wrap list items in ul tags
-        formatted = formatted.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+        // Clean and format HTML output from LLM
+        let formatted = text.trim();
         
-        // Wrap in paragraphs
-        if (!formatted.startsWith('<h4>') && !formatted.startsWith('<ul>')) {
+        // Remove any extra whitespace and normalize line breaks
+        formatted = formatted.replace(/\s+/g, ' ').replace(/\s*<br>\s*/g, '<br>');
+        
+        // Ensure proper HTML structure
+        if (!formatted.includes('<p>') && !formatted.includes('<h') && !formatted.includes('<ul>') && !formatted.includes('<ol>')) {
+            // If it's plain text, wrap in paragraph tags
             formatted = '<p>' + formatted + '</p>';
         }
-
+        
+        // Fix common HTML formatting issues
+        formatted = formatted
+            .replace(/<h4>/g, '<h4>')
+            .replace(/<\/h4>/g, '</h4>')
+            .replace(/<p>/g, '<p>')
+            .replace(/<\/p>/g, '</p>')
+            .replace(/<ul>/g, '<ul>')
+            .replace(/<\/ul>/g, '</ul>')
+            .replace(/<li>/g, '<li>')
+            .replace(/<\/li>/g, '</li>')
+            .replace(/<strong>/g, '<strong>')
+            .replace(/<\/strong>/g, '</strong>')
+            .replace(/<em>/g, '<em>')
+            .replace(/<\/em>/g, '</em>');
+        
+        // Ensure proper spacing around headers
+        formatted = formatted.replace(/<\/h4>/g, '</h4><br>');
+        
         return formatted;
     }
 
@@ -451,9 +496,20 @@ class NetworkAnalyzer {
 
     getAnomalySeverity(anomalyType, count) {
         if (count === 0) return 'low';
-        if (anomalyType === 'high_severity_alerts' && count > 10) return 'high';
-        if (anomalyType === 'expired_tls' && count > 5) return 'high';
+        
+        // ML-based anomaly severity
+        if (anomalyType.includes('isolation_forest') && count > 5) return 'high';
+        if (anomalyType.includes('dbscan') && count > 10) return 'high';
+        if (anomalyType.includes('z_score') && count > 20) return 'medium';
+        if (anomalyType.includes('iqr') && count > 15) return 'medium';
+        if (anomalyType.includes('temporal_pattern') && count > 3) return 'high';
+        
+        // Rule-based anomaly severity
         if (anomalyType === 'oversized_payloads' && count > 20) return 'high';
+        if (anomalyType === 'suspicious_user_agents' && count > 5) return 'high';
+        if (anomalyType === 'high_frequency_sources' && count > 3) return 'medium';
+        if (anomalyType === 'rare_ports' && count > 10) return 'medium';
+        
         if (count > 50) return 'medium';
         return 'low';
     }
@@ -477,23 +533,55 @@ class NetworkAnalyzer {
         });
 
         // Prepare data for Chart.js
-        const labels = Array.from({length: 24}, (_, i) => `${i}:00`);
+        const labels = Array.from({length: 24}, (_, i) => `${i.toString().padStart(2, '0')}:00`);
         const colors = {
-            'alert': '#dc3545',
-            'tls': '#28a745',
-            'http': '#007bff',
-            'flow': '#6f42c1'
+            'alert': {
+                border: '#dc3545',
+                background: 'rgba(220, 53, 69, 0.1)',
+                point: '#dc3545'
+            },
+            'tls': {
+                border: '#28a745',
+                background: 'rgba(40, 167, 69, 0.1)',
+                point: '#28a745'
+            },
+            'http': {
+                border: '#007bff',
+                background: 'rgba(0, 123, 255, 0.1)',
+                point: '#007bff'
+            },
+            'flow': {
+                border: '#6f42c1',
+                background: 'rgba(111, 66, 193, 0.1)',
+                point: '#6f42c1'
+            },
+            'dns': {
+                border: '#fd7e14',
+                background: 'rgba(253, 126, 20, 0.1)',
+                point: '#fd7e14'
+            },
+            'ssh': {
+                border: '#20c997',
+                background: 'rgba(32, 201, 151, 0.1)',
+                point: '#20c997'
+            }
         };
 
         const datasets = eventTypes.map(type => ({
-            label: type.toUpperCase(),
+            label: type.charAt(0).toUpperCase() + type.slice(1),
             data: Array.from({length: 24}, (_, hour) => hourlyData[hour][type] || 0),
-            borderColor: colors[type] || '#666',
-            backgroundColor: colors[type] || '#666',
-            fill: false,
-            tension: 0.1,
-            pointRadius: 4,
-            pointHoverRadius: 6
+            borderColor: colors[type]?.border || '#6c757d',
+            backgroundColor: colors[type]?.background || 'rgba(108, 117, 125, 0.1)',
+            pointBackgroundColor: colors[type]?.point || '#6c757d',
+            pointBorderColor: colors[type]?.point || '#6c757d',
+            pointHoverBackgroundColor: colors[type]?.point || '#6c757d',
+            pointHoverBorderColor: '#fff',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            borderWidth: 3,
+            pointBorderWidth: 2
         }));
 
         // Get canvas element
@@ -505,7 +593,7 @@ class NetworkAnalyzer {
             this.chart.destroy();
         }
 
-        // Create new Chart.js chart
+        // Create new Chart.js chart with enhanced styling
         this.chart = new Chart(canvas, {
             type: 'line',
             data: {
@@ -518,37 +606,97 @@ class NetworkAnalyzer {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Event Trends Over 24 Hours',
+                        text: 'Network Event Trends - 24 Hour Overview',
                         font: {
-                            size: 16,
-                            weight: 'bold'
+                            size: 18,
+                            weight: 'bold',
+                            family: 'system-ui, -apple-system, sans-serif'
+                        },
+                        color: '#2c3e50',
+                        padding: {
+                            top: 10,
+                            bottom: 30
                         }
                     },
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                weight: '600'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        displayColors: true,
+                        callbacks: {
+                            title: function(context) {
+                                return `Time: ${context[0].label}`;
+                            },
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.parsed.y} events`;
+                            }
+                        }
                     }
                 },
                 scales: {
                     x: {
                         title: {
                             display: true,
-                            text: 'Time (24-hour format)'
+                            text: 'Time of Day',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            color: '#495057'
                         },
                         grid: {
                             display: true,
-                            color: '#e0e0e0'
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxRotation: 45,
+                            minRotation: 45,
+                            font: {
+                                size: 11
+                            }
                         }
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Event Count'
+                            text: 'Number of Events',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            color: '#495057'
                         },
                         beginAtZero: true,
                         grid: {
                             display: true,
-                            color: '#e0e0e0'
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            callback: function(value) {
+                                if (value === 0) return '0';
+                                if (value >= 1000) return (value / 1000).toFixed(1) + 'k';
+                                return value.toString();
+                            }
                         }
                     }
                 },
@@ -558,8 +706,13 @@ class NetworkAnalyzer {
                 },
                 elements: {
                     point: {
-                        hoverRadius: 8
+                        hoverRadius: 10,
+                        hoverBorderWidth: 3
                     }
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeInOutQuart'
                 }
             }
         });

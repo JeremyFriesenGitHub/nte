@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Data Analyzer</title>
+    <title>Network Traffic Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,13 +13,19 @@
     <div class="container">
         <header class="header">
             <div class="header-content">
-                <h1><i class="fas fa-network-wired"></i> Network Data Analyzer</h1>
-                <p>Analyze your network data with AI-powered insights</p>
+                <h1><i class="fas fa-network-wired"></i> Network Traffic Analyzer</h1>
+                <p>Analyze your network traffic data with AI-powered insights</p>
             </div>
         </header>
 
         <main class="main-content">
             <div class="upload-section">
+                <div class="external-tools external-tools-top">
+                    <button id="malcolmBtn" class="malcolm-btn">
+                        <i class="fas fa-external-link-alt"></i>
+                        Open Malcolm
+                    </button>
+                </div>
                 <div class="upload-card">
                     <div class="upload-icon">
                         <i class="fas fa-cloud-upload-alt"></i>
@@ -38,15 +44,9 @@
                     
                     <button id="analyzeBtn" class="analyze-btn" disabled>
                         <i class="fas fa-brain"></i>
-                        Analyze with AI
+                        Analyze
                     </button>
                     
-                    <div class="external-tools">
-                        <button id="malcolmBtn" class="malcolm-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Open Malcolm
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -81,11 +81,6 @@
                     <div class="stats-card">
                         <h3><i class="fas fa-exclamation-triangle"></i> Detected Anomalies</h3>
                         <div id="detectedAnomalies" class="stats-content"></div>
-                    </div>
-                    
-                    <div class="stats-card">
-                        <h3><i class="fas fa-users"></i> Top Talkers</h3>
-                        <div id="topTalkers" class="stats-content"></div>
                     </div>
                     
                     <div class="stats-card">
@@ -130,7 +125,7 @@
         </main>
 
         <footer class="footer">
-            <p>&copy; 2025 Network Data Analyzer. Powered by Cohere AI.</p>
+            <p>&copy; 2025 Network Data Analyzer. Powered by Cohere.</p>
         </footer>
     </div>
 

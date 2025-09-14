@@ -62,7 +62,8 @@ body {
 /* Upload Section */
 .upload-section {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .upload-card {
@@ -124,6 +125,13 @@ body {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #eee;
+}
+
+.external-tools.external-tools-top {
+    text-align: center;
+    margin: 0 0 16px 0; /* no top margin, some space below */
+    padding: 0;        /* remove padding intended for in-card usage */
+    border-top: none;  /* no divider line above when placed at top */
 }
 
 .malcolm-btn {
