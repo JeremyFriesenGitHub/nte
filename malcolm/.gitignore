@@ -1,0 +1,60 @@
+# code editor files
+.vscode/
+# arkime
+/arkime/etc/GeoLite2-*
+/arkime/etc/oui.txt*
+/arkime/etc/wise.ini
+/arkime/wiseini
+/arkime/etc/ipv4-address-space.csv*
+/README.css
+
+# auth-related
+/.ldap_config_defaults
+/auth.env
+/config/*.env
+/.opensearch*.curlrc
+/logstash/certs
+/filebeat/certs
+/nginx/certs
+/nginx/ca-trust
+/nginx/htpasswd
+/nginx/nginx_ldap*.conf
+/htadmin/config.ini
+/htadmin/metadata
+*.keystore
+
+# runtime
+.tmp
+.configured
+config.*/
+/redis
+/postgres
+
+# development
+.envrc
+.direnv
+.vagrant
+.fuse_*
+.venv
+malcolm_*images.tar.gz
+malcolm_*images.tar.xz
+malcolm_netbox_backup_*.gz
+*.iso
+*.img
+*-build.log
+Gemfile.lock
+_site
+hedgehog-iso/_config.yml
+hedgehog-iso/_includes
+hedgehog-iso/_layouts
+hedgehog-iso/_site
+hedgehog-iso/docs
+hedgehog-iso/Gemfile
+hedgehog-iso/README.md
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+__pypackages__/
+*.py[cod]
+*$py.class
+.DS_Store

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link href="upload/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="upload/@jcubic/tagger/tagger.css" rel="stylesheet">
+    <style>
+        .tagger > ul > li:not(.tagger-new) > :first-child {
+            background: #369763 !important;
+            border: 1px none #369763 !important;
+            border-radius: 12px !important;
+        }
+        .tagger > ul > li:not(.tagger-new) > span,
+        .tagger > ul > li:not(.tagger-new) > a > span {
+            color: white !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
+        }
+        .tagger > ul > li:not(.tagger-new) a,
+        .tagger > ul > li:not(.tagger-new) a:visited {
+            color: white !important;
+        }
+        .tagger {
+            border-radius: 12px !important;
+        }
+        .tagger + .tagger {
+            margin-top: 10px;
+        }
+        .button {
+          background-color: #369763;
+          border: none;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 14px;
+          margin: 4px 2px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
+        }
+        .button_rounded {
+            border-radius: 12px;
+        }
+        .panel-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            text-align: center;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .imgcenter {
+            width: 50%;
+        }
+        .site-dropdown {
+            display: none; /* hide initially */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            border-radius: 12px;
+            border: 1px solid #909497;
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        #malcolm-readiness-container {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        }
+        /* Tooltip styling */
+        #malcolm-details {
+            display: none;
+            text-align: left;
+            position: absolute;
+            background-color: #f9f9f9;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 14px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            white-space: normal;
+        }
+        /* Show tooltip on hover */
+        #malcolm-readiness-container:hover #malcolm-details {
+            display: block;
+        }
+        /* Grid layout for aligning key-value pairs */
+        #malcolm-details ul {
+            display: grid;
+            grid-template-columns: auto auto; /* Two columns */
+            gap: 5px 10px; /* Spacing between rows and columns */
+            margin: 0;
+            padding: 0;
+            list-style: none; /* Remove default list styling */
+        }
+        #malcolm-details ul li {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <img class="center imgcenter" src="upload/Malcolm_banner.png">
+    <h1 class="panel-title">Network Traffic Artifact Upload</h1>
+
+    <form id="commit_files" action="server/php/submit.php" method="post" enctype="multipart/form-data">
+
+        <div style="display: flex;">
+            <div style="flex-grow: 1;"><input type="text" name="tags"/></div>
+            <div>
+                <select name="site-dropdown" id="site-dropdown" class="site-dropdown" title="NetBox site">
+                    <!-- Options will be populated dynamically -->
+                </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" id="commit_button" class="button button_rounded">Commit Uploaded Files</button>
+        <input type="file" name="filepond[]" multiple>
+
+    </form>
+
+    <script src="upload/@jcubic/tagger/tagger.js"></script>
+    <script src="upload/filepond/dist/filepond.js"></script>
+    <script src="upload/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
+    <script src="upload/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+    <script src="upload/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+
+    <script>
+
+        window.addEventListener("DOMContentLoaded", function () {
+
+            const form_button = document.getElementById("commit_button");
+            form_button.disabled = true;
+            form_button.style.backgroundColor = '#cccccc';
+            form_button.style.color = '#666666';
+
+            FilePond.registerPlugin(
+                FilePondPluginFileMetadata,
+                FilePondPluginFileRename,
+                FilePondPluginFileValidateSize
+            );
+
+            FilePond.setOptions({
+                maxFileSize: '50000MB',
+                server: 'server/php/',
+                allowPaste: false,
+                allowRemove: true,
+                allowRevert: true,
+                allowFileMetadata: true,
+                credits: false
+            });
+
+            // Turn a file input into a file pond
+            var pond = FilePond.create(document.querySelector('input[name="filepond[]"]'));
+
+            // Turn a text input into a tags field
+            var tagme = tagger(document.querySelector('input[name="tags"]'), {
+                allow_duplicates: false,
+                allow_spaces: true,
+                completion: {
+                    list: [],
+                    delay: 400,
+                    min_length: 2
+                },
+                tag_limit: 16,
+                wrap: true,
+                add_on_blur: true,
+                placeholder: 'User-defined tags',
+                link: function(name) {
+                    return false;
+                },
+                filter: (name) => name,
+            });
+
+            const form = document.getElementById("commit_files");
+            form.addEventListener("submit", setFileTags);
+            function setFileTags(e) {
+                const files = pond.getFiles();
+                valid = ((files) && (files.length > 0) && (!form_button.disabled));
+                if (!valid) {
+                    e.preventDefault();
+                }
+                return valid;
+            }
+
+            pond.on('addfilestart', (file) => {
+                form_button.disabled = true;
+                form_button.style.backgroundColor = '#cccccc';
+                form_button.style.color = '#666666';
+            });
+            pond.on('processfiles', () => {
+                form_button.disabled = false;
+                form_button.style.backgroundColor = '#369763';
+                form_button.style.color = '#ffffff';
+            });
+            function checkSubmitEnabler() {
+                const files = pond.getFiles();
+                const isLoading = files.filter(x=>x.status !== 5).length !== 0;
+                if ((files.length > 0) && (!isLoading)) {
+                    form_button.disabled = false;
+                    form_button.style.backgroundColor = '#369763';
+                    form_button.style.color = '#ffffff';
+                }
+            }
+            setInterval(checkSubmitEnabler, 5000);
+
+            const netBoxSiteDropdown = document.getElementById('site-dropdown');
+
+            // Function to populate the NetBox site dropdown
+            function populatenetBoxSiteDropdown(data) {
+                // Clear any existing options
+                netBoxSiteDropdown.innerHTML = '';
+
+                // Create and append "skip enrichment" item (netbox site id 0 == "skip")
+                const skipOption = document.createElement('option');
+                skipOption.value = 0;
+                skipOption.textContent = "No NetBox Enrichment";
+                netBoxSiteDropdown.appendChild(skipOption);
+
+                // Convert object keys to an array of site entries
+                const siteEntries = Object.entries(data).map(([id, site]) => ({
+                    id: parseInt(id, 10),
+                    text: site.display || site.name || site.slug || `Site ${id}`
+                }));
+
+                if (siteEntries.length > 0) {
+                    // Find the entry with the lowest ID
+                    const lowestId = Math.min(...siteEntries.map(site => site.id));
+
+                    // Create and append options
+                    siteEntries.forEach(site => {
+                        const option = document.createElement('option');
+                        option.value = site.id;
+                        option.textContent = site.text;
+                        if (site.id === lowestId) {
+                            option.selected = true;
+                        }
+                        netBoxSiteDropdown.appendChild(option);
+                    });
+
+                    // Make the dropdown visible
+                    netBoxSiteDropdown.style.display = 'block';
+                } else {
+                    // Hide the dropdown if no results
+                    netBoxSiteDropdown.style.display = 'none';
+                }
+            }
+
+            function fetchNetBoxSites() {
+                // Fetch data from the NetBox dcim/sites REST API
+                fetch('/mapi/netbox-sites')
+                    .then(response => response.json())
+                    .then(data => {
+                        populatenetBoxSiteDropdown(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching NetBox sites:', error);
+                        // Hide the dropdown on error
+                        netBoxSiteDropdown.style.display = 'none';
+                    });
+            }
+
+
+            const readinessIndicator = document.getElementById('malcolm-summary');
+            const readinessDetailsContainer = document.getElementById('malcolm-details');
+
+            function populateMalcolmReadiness(data) {
+                const isEssentialReady = data.arkime && data.logstash_lumberjack && data.logstash_pipelines && data.opensearch && data.pcap_monitor;
+
+                readinessIndicator.textContent = isEssentialReady ? '✅ Ready to ingest data' : '❌ Not ready to ingest data 🔄';
+
+                const detailedList = Object.entries(data)
+                    .map(([key, value]) => `<li>${key}</li><li>${value ? '✅' : '❌'}</li>`)
+                    .join('');
+                readinessDetailsContainer.innerHTML = `<ul>${detailedList}</ul>`;
+            }
+
+            function fetchMalcolmReadiness() {
+                fetch('/mapi/ready')
+                    .then(response => response.json())
+                    .then(data => {
+                        populateMalcolmReadiness(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching Malcolm readiness:', error);
+                        readinessIndicator.textContent = '';
+                        readinessDetailsContainer.innerHTML = '<p></p>';
+                    });
+            }
+
+            fetchNetBoxSites();
+            fetchMalcolmReadiness();
+
+            readinessIndicator.addEventListener('click', function () {
+                fetchNetBoxSites();
+                fetchMalcolmReadiness();
+            });
+
+        })
+    </script>
+<footer>
+    <div id="malcolm-readiness-container">
+        <span id="malcolm-summary"></span>
+        <div id="malcolm-details"></div>
+    </div>
+</footer>
+</body>
+</html>

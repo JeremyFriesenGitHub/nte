@@ -1,0 +1,162 @@
+#!/bin/bash
+
+# tweak some stuff for aide
+chmod a-x /etc/cron.daily/dailyaidecheck
+chattr +i /etc/cron.daily/dailyaidecheck
+mkdir -p /etc/aide/aide.conf.d /var/lib/aide
+touch /var/lib/aide/aide.db
+chmod 600 /var/lib/aide/aide.db
+sed -r -i "s/(Checksums\s*=\s*).*/\1 sha512/" /etc/aide/aide.conf
+cat << 'EOF' >> /etc/aide/aide.conf.d/00_local_excludes
+/etc/at\.allow$ f Full-n-c-m
+/etc/clamav/.+\.conf$ f VarFile-n-c-m
+/etc/clamav$ d VarDir-n-c-m
+/etc/cron\.allow$ f Full-n-c-m
+/etc/cron\.\w+$ d VarDir-n-c-m
+/etc/crontab$ f VarFile-n-c-m
+/etc/group-?$ f VarFile-n-c-m
+/etc/gshadow-?$ f VarFile-n-c-m
+/etc/hostname$ f VarFile-n-c-m
+/etc/hosts$ f VarFile-n-c-m
+/etc/installer-?$ f Full-n-c-m
+/etc/ntp\.conf$ f VarFile-n-c-m
+/etc/passwd-?$ f VarFile-n-c-m
+/etc/rc\d*\.d/.+$ l VarInode
+/etc/rc\d*\.d$ d VarDir-n-c-m
+/etc/shadow-?$ f VarFile-n-c-m
+/etc/systemd/system/multi-user\.target\.wants/.+$ l VarInode
+/etc/systemd/system/multi-user\.target\.wants(/|$) d VarDir-n-c-m
+/etc/ufw/.+\.rules$ f VarFile-n-c-m
+/etc/ufw$ d VarDir-n-c-m
+/opt$ d VarDir-n-c-m
+/usr/local/bin$ d VarDirTime-n
+/var/lib/aide/aide\.db(\.new)?$ f VarFile-n-c-m-i
+/var/lib/aide$ d VarDirInode-n-c-m
+/var/lib/samba$ d VarDir-n-c-m
+
+!/(.+/)?__pycache__(/|$)
+!/dev(/|$)
+!/etc/.*\.bak$
+!/etc/aide/.*\.swp$
+!/etc/cron\.d/htpdate$
+!/etc/ld\.so\.cache$
+!/etc/lvm/archive(/|$)
+!/etc/lvm/backup(/|$)
+!/etc/network/interfaces.d(/|$)
+!/etc/NetworkManager/system-connections(/|$)
+!/etc/rc\d*\.d/.*ntp$
+!/etc/systemd/system/multi-user\.target\.wants/ntp.service$
+!/home(/|$)
+!/malcolm_images\.tar\.gz$
+!/opt/harbianaudit(/|$)
+!/root(/|$)
+!/run(/|$)
+!/tmp(/|$)
+!/usr/local/lib/python.*/dist-packages/debinterface(/|$)
+!/var/backups(/|$)
+!/var/cache(/|$)
+!/var/lib/AccountsService(/|$)
+!/var/lib/apt/daily_lock$
+!/var/lib/apt/lists(/|$)
+!/var/lib/clamav(/|$)
+!/var/lib/colord(/|$)
+!/var/lib/containerd(/|$)
+!/var/lib/dhcp(/|$)
+!/var/lib/docker(/|$)
+!/var/lib/dpkg/info(/|$)
+!/var/lib/dpkg/triggers/Lock$
+!/var/lib/lightdm(/|$)
+!/var/lib/logrotate$
+!/var/lib/NetworkManager(/|$)
+!/var/lib/plymouth(/|$)
+!/var/lib/samba(/|$)
+!/var/lib/sudo/lectured(/|$)
+!/var/log(/|$)
+!/var/mail(/|$)
+!/var/run(/|$)
+!/var/spool(/|$)
+!/var/tmp(/|$)
+
+EOF
+###
+
+# we'll use cURL to get release information and assets from GitHub using the GitHub API
+GITHUB_API_CURL_ARGS=()
+GITHUB_API_CURL_ARGS+=( -fsSL )
+GITHUB_API_CURL_ARGS+=( -H )
+GITHUB_API_CURL_ARGS+=( "Accept: application/vnd.github.v3+json" )
+[[ -n "$GITHUB_TOKEN" ]] && GITHUB_API_CURL_ARGS+=( -H ) && GITHUB_API_CURL_ARGS+=( "Authorization: token $GITHUB_TOKEN" )
+
+# docker-compose symlink
+dpkg -s docker-compose-plugin && \
+    ln -s -r /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
+
+# yq
+RELEASE_URL="https://api.github.com/repos/mikefarah/yq/releases/latest"
+RELEASE_FILE_REGEX="yq_linux_amd64\\\.tar\\\.gz$"
+cd /usr/local/bin
+curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$RELEASE_URL" | jq '.assets_url' | tr -d '"')" | jq ".[] | select(.browser_download_url|test(\"$RELEASE_FILE_REGEX\")) | .browser_download_url" | tr -d '"')" | tar zxf - ./yq_linux_amd64
+mv ./yq_linux_amd64 ./yq
+chmod 755 ./yq
+
+# croc
+RELEASE_URL="https://api.github.com/repos/schollz/croc/releases/latest"
+RELEASE_FILE_REGEX="Linux-64bit\\\.tar\\\.gz$"
+cd /usr/local/bin
+curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$RELEASE_URL" | jq '.assets_url' | tr -d '"')" | jq ".[] | select(.browser_download_url|test(\"$RELEASE_FILE_REGEX\")) | .browser_download_url" | tr -d '"')" | tar zxvf - croc
+chmod 755 ./croc
+chown root:root ./croc
+###
+
+# just
+JUST_RELEASE_URL="https://api.github.com/repos/casey/just/releases/latest"
+mkdir -p /tmp/just
+cd /tmp
+just_assets_url="$(curl "${GITHUB_API_CURL_ARGS[@]}" "$JUST_RELEASE_URL" | jq '.assets_url' | tr -d '"')"
+just_tar_url="$(curl "${GITHUB_API_CURL_ARGS[@]}" "$just_assets_url" | jq ".[] | select(.browser_download_url | contains(\"x86_64-unknown-linux-musl.tar.gz\")) | .browser_download_url" | tr -d '"')"
+curl "${GITHUB_API_CURL_ARGS[@]}" "${just_tar_url}" | tar xzf - -C ./just
+mv ./just/just /usr/local/bin/just
+chmod 755 /usr/local/bin/just
+chown root:root /usr/local/bin/just
+rm -rf /tmp/just
+###
+
+# eza
+EZA_RELEASE_URL="https://api.github.com/repos/eza-community/eza/releases/latest"
+mkdir -p /tmp/eza
+cd /tmp
+eza_assets_url="$(curl "${GITHUB_API_CURL_ARGS[@]}" "$EZA_RELEASE_URL" | jq '.assets_url' | tr -d '"')"
+eza_tar_url="$(curl "${GITHUB_API_CURL_ARGS[@]}" "$eza_assets_url" | jq ".[] | select(.browser_download_url | contains(\"x86_64-unknown-linux-gnu.tar.gz\")) | .browser_download_url" | tr -d '"')"
+curl "${GITHUB_API_CURL_ARGS[@]}" "${eza_tar_url}" | tar xzf - -C ./eza
+mv ./eza/eza /usr/local/bin/eza
+chmod 755 /usr/local/bin/eza
+chown root:root /usr/local/bin/eza
+rm -rf /tmp/eza
+###
+
+# terminal font
+mkdir -p /usr/share/fonts/truetype/hack
+cd /usr/share/fonts/truetype/hack
+curl -sSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz | tar xfJ -
+chmod 755 /usr/share/fonts/truetype/hack
+chmod 644 /usr/share/fonts/truetype/hack/*
+fc-cache -f -v
+###
+
+# stern
+RELEASE_URL="https://api.github.com/repos/stern/stern/releases/latest"
+RELEASE_FILE_REGEX="_linux_amd64\\\.tar\\\.gz$"
+cd /tmp
+mkdir -p ./stern
+curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$(curl "${GITHUB_API_CURL_ARGS[@]}" "$RELEASE_URL" | jq '.assets_url' | tr -d '"')" | jq ".[] | select(.browser_download_url|test(\"$RELEASE_FILE_REGEX\")) | .browser_download_url" | tr -d '"')" | tar xzf - -C ./stern
+mv ./stern/stern /usr/local/bin/stern
+chmod 755 /usr/local/bin/stern
+chown root:root /usr/local/bin/stern
+rm -rf /tmp/stern*
+###
+
+# kubectl
+curl -sSL -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -sSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod 755 /usr/local/bin/kubectl
+chown root:root /usr/local/bin/kubectl
+###

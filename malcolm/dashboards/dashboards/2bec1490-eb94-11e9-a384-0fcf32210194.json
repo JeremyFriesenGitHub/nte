@@ -1,0 +1,696 @@
+{
+  "version": "2.14.0",
+  "objects": [
+    {
+      "id": "2bec1490-eb94-11e9-a384-0fcf32210194",
+      "type": "dashboard",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:50:25.215Z",
+      "version": "WzEwMDAsMV0=",
+      "attributes": {
+        "title": "BACnet",
+        "hits": 0,
+        "description": "Dashboard for the BACnet (Building Automation and Control Networks) Protocol",
+        "panelsJSON": "[{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":0,\"w\":8,\"h\":33,\"i\":\"1\"},\"panelIndex\":\"1\",\"embeddableConfig\":{},\"panelRefName\":\"panel_0\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":8,\"y\":0,\"w\":7,\"h\":33,\"i\":\"f59d8cf5-80a3-48b9-be05-d6801203e9e4\"},\"panelIndex\":\"f59d8cf5-80a3-48b9-be05-d6801203e9e4\",\"embeddableConfig\":{},\"panelRefName\":\"panel_1\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":15,\"y\":0,\"w\":33,\"h\":12,\"i\":\"bcc1cb9c-a8c4-4e3d-9d43-db85a009dd3a\"},\"panelIndex\":\"bcc1cb9c-a8c4-4e3d-9d43-db85a009dd3a\",\"embeddableConfig\":{},\"panelRefName\":\"panel_2\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":15,\"y\":12,\"w\":19,\"h\":21,\"i\":\"113b15fe-a59c-466a-b8cd-f3c7879b592c\"},\"panelIndex\":\"113b15fe-a59c-466a-b8cd-f3c7879b592c\",\"embeddableConfig\":{},\"panelRefName\":\"panel_3\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":34,\"y\":12,\"w\":14,\"h\":21,\"i\":\"1d52698a-869a-4b09-ae6a-0508a4d66c05\"},\"panelIndex\":\"1d52698a-869a-4b09-ae6a-0508a4d66c05\",\"embeddableConfig\":{\"table\":null,\"vis\":{\"params\":{\"sort\":{\"columnIndex\":1,\"direction\":\"desc\"}}}},\"panelRefName\":\"panel_4\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":33,\"w\":14,\"h\":37,\"i\":\"817b3d94-c72c-4ce1-a0f7-3a2f17cbdbd8\"},\"panelIndex\":\"817b3d94-c72c-4ce1-a0f7-3a2f17cbdbd8\",\"embeddableConfig\":{},\"panelRefName\":\"panel_5\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":14,\"y\":33,\"w\":15,\"h\":19,\"i\":\"3d5b4c08-2847-4132-bf7b-01502d68a41f\"},\"panelIndex\":\"3d5b4c08-2847-4132-bf7b-01502d68a41f\",\"embeddableConfig\":{},\"panelRefName\":\"panel_6\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":29,\"y\":33,\"w\":19,\"h\":19,\"i\":\"7459b87c-93ee-44aa-b6c3-eb30948fee2a\"},\"panelIndex\":\"7459b87c-93ee-44aa-b6c3-eb30948fee2a\",\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":2,\"direction\":\"desc\"}},\"sortColumn\":{\"colIndex\":2,\"direction\":\"desc\"}}},\"panelRefName\":\"panel_7\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":14,\"y\":52,\"w\":34,\"h\":18,\"i\":\"0b084c50-859e-4065-b437-97ed1fe8b612\"},\"panelIndex\":\"0b084c50-859e-4065-b437-97ed1fe8b612\",\"embeddableConfig\":{},\"panelRefName\":\"panel_8\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":70,\"w\":12,\"h\":18,\"i\":\"8ec8d974-809f-41c4-8039-6f738ee27e82\"},\"panelIndex\":\"8ec8d974-809f-41c4-8039-6f738ee27e82\",\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":1,\"direction\":\"desc\"}},\"sortColumn\":{\"colIndex\":1,\"direction\":\"desc\"}}},\"panelRefName\":\"panel_9\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":12,\"y\":70,\"w\":12,\"h\":18,\"i\":\"62a15e29-78d4-4e05-a742-83ab72f69bef\"},\"panelIndex\":\"62a15e29-78d4-4e05-a742-83ab72f69bef\",\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":1,\"direction\":\"desc\"}},\"sortColumn\":{\"colIndex\":1,\"direction\":\"desc\"}}},\"panelRefName\":\"panel_10\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":24,\"y\":70,\"w\":24,\"h\":18,\"i\":\"fb3d3f83-5b6b-4f0c-aad7-1182604cfa2a\"},\"panelIndex\":\"fb3d3f83-5b6b-4f0c-aad7-1182604cfa2a\",\"embeddableConfig\":{\"table\":null,\"vis\":{\"params\":{\"sort\":{\"columnIndex\":4,\"direction\":\"desc\"}},\"sortColumn\":{\"colIndex\":4,\"direction\":\"desc\"}}},\"panelRefName\":\"panel_11\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":88,\"w\":48,\"h\":18,\"i\":\"2376eb03-4a0c-42cd-8adc-3f65cfb9eefd\"},\"panelIndex\":\"2376eb03-4a0c-42cd-8adc-3f65cfb9eefd\",\"embeddableConfig\":{\"params\":{\"sort\":{\"columnIndex\":6,\"direction\":\"asc\"}},\"table\":null,\"vis\":{\"params\":{\"sort\":{\"columnIndex\":6,\"direction\":\"desc\"}},\"sortColumn\":{\"colIndex\":1,\"direction\":\"asc\"}}},\"panelRefName\":\"panel_12\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":106,\"w\":48,\"h\":18,\"i\":\"773ed96f-8933-4f9c-b52f-02fd2398b4bc\"},\"panelIndex\":\"773ed96f-8933-4f9c-b52f-02fd2398b4bc\",\"embeddableConfig\":{},\"panelRefName\":\"panel_13\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":124,\"w\":48,\"h\":16,\"i\":\"9ee45ae2-d182-4fac-9ac5-cae0aaabd552\"},\"panelIndex\":\"9ee45ae2-d182-4fac-9ac5-cae0aaabd552\",\"embeddableConfig\":{},\"panelRefName\":\"panel_14\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":140,\"w\":48,\"h\":15,\"i\":\"a0050292-4d09-4c60-93cd-45f9516d1664\"},\"panelIndex\":\"a0050292-4d09-4c60-93cd-45f9516d1664\",\"embeddableConfig\":{},\"panelRefName\":\"panel_15\"},{\"version\":\"2.14.0\",\"gridData\":{\"x\":0,\"y\":155,\"w\":48,\"h\":19,\"i\":\"1b62ffd6-ba78-492c-b64a-99cbe5a34a31\"},\"panelIndex\":\"1b62ffd6-ba78-492c-b64a-99cbe5a34a31\",\"embeddableConfig\":{},\"panelRefName\":\"panel_16\"}]",
+        "optionsJSON": "{\"useMargins\":true}",
+        "version": 1,
+        "timeRestore": false,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"highlightAll\":false,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+        }
+      },
+      "references": [
+        {
+          "name": "panel_0",
+          "type": "visualization",
+          "id": "df9e399b-efa5-4e33-b0ac-a7668a8ac2b3"
+        },
+        {
+          "name": "panel_1",
+          "type": "visualization",
+          "id": "7fcb8b90-c7b7-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_2",
+          "type": "visualization",
+          "id": "0d0cbd30-c7b8-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_3",
+          "type": "visualization",
+          "id": "1be7a440-dc0e-11ea-82b5-4506a254a95f"
+        },
+        {
+          "name": "panel_4",
+          "type": "visualization",
+          "id": "6eb9b2f0-c77b-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_5",
+          "type": "visualization",
+          "id": "f0cfb630-3258-11ef-8dd5-df3551cbe6ca"
+        },
+        {
+          "name": "panel_6",
+          "type": "visualization",
+          "id": "877c8d70-25b1-11ee-98b1-ff2b1cf864b8"
+        },
+        {
+          "name": "panel_7",
+          "type": "visualization",
+          "id": "5cd45d10-c794-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_8",
+          "type": "visualization",
+          "id": "3c403120-325a-11ef-8dd5-df3551cbe6ca"
+        },
+        {
+          "name": "panel_9",
+          "type": "visualization",
+          "id": "543975b0-cab3-11ea-84cd-4f7b1f416f80"
+        },
+        {
+          "name": "panel_10",
+          "type": "visualization",
+          "id": "98b559c0-cab3-11ea-84cd-4f7b1f416f80"
+        },
+        {
+          "name": "panel_11",
+          "type": "visualization",
+          "id": "cc0501c0-caab-11ea-84cd-4f7b1f416f80"
+        },
+        {
+          "name": "panel_12",
+          "type": "visualization",
+          "id": "bfc334f0-ca05-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_13",
+          "type": "search",
+          "id": "00294170-c77b-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_14",
+          "type": "search",
+          "id": "ccfe3ca0-c77b-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_15",
+          "type": "search",
+          "id": "b5300770-c77b-11ea-8578-f3ff6bdd82b2"
+        },
+        {
+          "name": "panel_16",
+          "type": "search",
+          "id": "f28bbce0-25b0-11ee-98b1-ff2b1cf864b8"
+        }
+      ],
+      "migrationVersion": {
+        "dashboard": "7.9.3"
+      }
+    },
+    {
+      "id": "df9e399b-efa5-4e33-b0ac-a7668a8ac2b3",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:47:29.923Z",
+      "version": "Wzg2MCwxXQ==",
+      "attributes": {
+        "title": "Navigation",
+        "visState": "{\"title\":\"Navigation\",\"type\":\"markdown\",\"params\":{\"markdown\":\"MALCOLM_NAVIGATION_MARKDOWN_REPLACER\",\"type\":\"markdown\",\"fontSize\":10,\"openLinksInNewTab\":false},\"aggs\":[]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":{\"query_string\":{\"query\":\"*\"}},\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      },
+      "references": [],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "7fcb8b90-c7b7-11ea-8578-f3ff6bdd82b2",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzE5NiwxXQ==",
+      "attributes": {
+        "title": "BACnet - Log Count",
+        "visState": "{\"title\":\"BACnet - Log Count\",\"type\":\"metric\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{\"customLabel\":\"Log Count\"},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"event.dataset\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":7,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Log Type\"},\"schema\":\"group\"}],\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":32}}}}",
+        "uiStateJSON": "{}",
+        "description": "Count of BACnet logs including BACnet Discovery and Property logs",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"event.dataset:*bacnet*\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "0d0cbd30-c7b8-11ea-8578-f3ff6bdd82b2",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzE5NywxXQ==",
+      "attributes": {
+        "title": "BACnet - Logs Over Time",
+        "visState": "{\"title\":\"BACnet - Logs Over Time\",\"type\":\"histogram\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"square root\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"stacked\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"bottom\",\"times\":[],\"addTimeMarker\":false,\"labels\":{\"show\":false},\"thresholdLine\":{\"show\":false,\"value\":10,\"width\":1,\"style\":\"full\",\"color\":\"#E7664C\"},\"dimensions\":{\"x\":{\"accessor\":0,\"format\":{\"id\":\"date\",\"params\":{\"pattern\":\"YYYY\"}},\"params\":{\"date\":true,\"interval\":\"P365D\",\"intervalESValue\":365,\"intervalESUnit\":\"d\",\"format\":\"YYYY\",\"bounds\":{\"min\":\"1971-01-14T16:39:09.309Z\",\"max\":\"2021-01-14T16:39:09.309Z\"}},\"label\":\"MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER per 365 days\",\"aggType\":\"date_histogram\"},\"y\":[{\"accessor\":2,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"series\":[{\"accessor\":1,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"Log Type\",\"aggType\":\"terms\"}]}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER\",\"useNormalizedEsInterval\":true,\"scaleMetricValues\":false,\"interval\":\"auto\",\"drop_partials\":false,\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\" \"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"event.dataset\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":5,\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Log Type\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"legendOpen\":true}}",
+        "description": "BACnet Logs over Time",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"event.dataset:*bacnet*\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "1be7a440-dc0e-11ea-82b5-4506a254a95f",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzE5OCwxXQ==",
+      "attributes": {
+        "title": "BACnet - Device Vendors",
+        "visState": "{\"title\":\"BACnet - Device Vendors\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"bottom\",\"isDonut\":true,\"labels\":{\"show\":true,\"values\":true,\"last_level\":true,\"truncate\":100},\"dimensions\":{\"metric\":{\"accessor\":1,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Unique count of zeek.bacnet.instance_number\",\"aggType\":\"cardinality\"},\"buckets\":[{\"accessor\":0,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"Device Vendor\",\"aggType\":\"terms\"}]}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"zeek.bacnet.instance_number\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"zeek.bacnet_discovery.vendor\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":10,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Device Vendor\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"legendOpen\":true}}",
+        "description": "BACnet Device Vendors from i-am messages",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "b5300770-c77b-11ea-8578-f3ff6bdd82b2"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "6eb9b2f0-c77b-11ea-8578-f3ff6bdd82b2",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:34:03.765Z",
+      "version": "Wzk5MywxXQ==",
+      "attributes": {
+        "title": "BACnet - BVLC Functions",
+        "visState": "{\"title\":\"BACnet - BVLC Functions\",\"type\":\"table\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"zeek.bacnet.bvlc_function\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"BVLC Function\"},\"schema\":\"bucket\"}],\"params\":{\"perPage\":12,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\",\"dimensions\":{\"metrics\":[{\"accessor\":0,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"buckets\":[]}}}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "BACnet Virtual Link Control Functions (Link-Layer Control)",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "00294170-c77b-11ea-8578-f3ff6bdd82b2"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "f0cfb630-3258-11ef-8dd5-df3551cbe6ca",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:38:25.042Z",
+      "version": "Wzk5NCwxXQ==",
+      "attributes": {
+        "title": "ATT&CK for ICS Tactic - BACnet",
+        "visState": "{\"title\":\"ATT&CK for ICS Tactic - BACnet\",\"type\":\"horizontal_bar\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"threat.tactic.name\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"ATT&CK for ICS Tactic\"},\"schema\":\"segment\"},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"threat.tactic.name\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"ATT&CK for ICS Tactic\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\"},\"schema\":\"group\"}],\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":200},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"square root\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":75,\"filter\":true,\"truncate\":100},\"title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"histogram\",\"mode\":\"stacked\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"lineWidth\":2,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"bottom\",\"times\":[],\"addTimeMarker\":false,\"labels\":{},\"thresholdLine\":{\"show\":false,\"value\":10,\"width\":1,\"style\":\"full\",\"color\":\"#E7664C\"}}}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"network.protocol:bacnet\",\"language\":\"lucene\"},\"filter\":[]}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "065593f0-3257-11ef-8dd5-df3551cbe6ca"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "877c8d70-25b1-11ee-98b1-ff2b1cf864b8",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:48:45.491Z",
+      "version": "Wzk5OCwxXQ==",
+      "attributes": {
+        "title": "BACnet - Actions and Results",
+        "visState": "{\"title\":\"BACnet - Actions and Results\",\"type\":\"table\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"event.action\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":true,\"missingBucketLabel\":\"-\",\"customLabel\":\"Action\"},\"schema\":\"bucket\"},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"event.result\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":true,\"missingBucketLabel\":\"-\",\"customLabel\":\"Result\"},\"schema\":\"bucket\"}],\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\"}}",
+        "uiStateJSON": "{\"vis\":{\"sortColumn\":{\"colIndex\":2,\"direction\":\"desc\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"event.dataset:*bacnet* AND (event.result:* OR event.action:*)\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "5cd45d10-c794-11ea-8578-f3ff6bdd82b2",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:49:22.653Z",
+      "version": "Wzk5OSwxXQ==",
+      "attributes": {
+        "title": "BACnet - Protocol Data Units (PDUs)",
+        "visState": "{\"title\":\"BACnet - Protocol Data Units (PDUs)\",\"type\":\"table\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"zeek.bacnet.pdu_service\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"PDU Service\"},\"schema\":\"bucket\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"zeek.bacnet.pdu_type\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"PDU Type\"},\"schema\":\"bucket\"}],\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":0,\"direction\":\"asc\"},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\",\"dimensions\":{\"metrics\":[{\"accessor\":2,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"buckets\":[{\"accessor\":0,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"PDU Service\",\"aggType\":\"terms\"}]}}}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":2,\"direction\":\"desc\"}}}}",
+        "description": "BACnet Application Layer Protocol Data Unit types and services",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "00294170-c77b-11ea-8578-f3ff6bdd82b2"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "3c403120-325a-11ef-8dd5-df3551cbe6ca",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:47:41.106Z",
+      "version": "Wzk5NywxXQ==",
+      "attributes": {
+        "title": "ATT&CK for ICS Notices - BACnet",
+        "visState": "{\"title\":\"ATT&CK for ICS Notices - BACnet\",\"type\":\"table\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"threat.tactic.name\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Tactic\"},\"schema\":\"bucket\"},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"threat.technique.name\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Technique\"},\"schema\":\"bucket\"},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"zeek.notice.msg\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":250,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Notice Message\"},\"schema\":\"bucket\"}],\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\"}}",
+        "uiStateJSON": "{\"vis\":{\"sortColumn\":{\"colIndex\":3,\"direction\":\"desc\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"network.protocol:bacnet\",\"language\":\"lucene\"},\"filter\":[]}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "065593f0-3257-11ef-8dd5-df3551cbe6ca"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "543975b0-cab3-11ea-84cd-4f7b1f416f80",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwMiwxXQ==",
+      "attributes": {
+        "title": "BACnet - Source IP",
+        "visState": "{\"title\":\"BACnet - Source IP\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"source.ip\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Source IP\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "Source IP Addresses from bacnet.log",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"event.dataset:(\\\"bacnet\\\")\",\"language\":\"lucene\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "98b559c0-cab3-11ea-84cd-4f7b1f416f80",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwMywxXQ==",
+      "attributes": {
+        "title": "BACnet - Destination IP",
+        "visState": "{\"title\":\"BACnet - Destination IP\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\",\"dimensions\":{\"metrics\":[{\"accessor\":1,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"buckets\":[{\"accessor\":0,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"Source IP\",\"aggType\":\"terms\"}]}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"destination.ip\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Destination IP\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "Destination IP Addresses from bacnet.log",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"event.dataset:(\\\"bacnet\\\")\",\"language\":\"lucene\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "cc0501c0-caab-11ea-84cd-4f7b1f416f80",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwNCwxXQ==",
+      "attributes": {
+        "title": "BACnet - Device Discovery",
+        "visState": "{\"title\":\"BACnet - Device Discovery\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":4,\"direction\":\"desc\"},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\",\"dimensions\":{\"metrics\":[{\"accessor\":4,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"buckets\":[{\"accessor\":0,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"Vendor\",\"aggType\":\"terms\"}]}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet_discovery.object_type\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Object Type\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet.instance_number\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Identifier\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet.pdu_service\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"PDU Service\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet_discovery.vendor\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Vendor\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":4,\"direction\":\"desc\"}}}}",
+        "description": "Results from BACnet i-am and i-have commands",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "b5300770-c77b-11ea-8578-f3ff6bdd82b2"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "bfc334f0-ca05-11ea-8578-f3ff6bdd82b2",
+      "type": "visualization",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwNSwxXQ==",
+      "attributes": {
+        "title": "BACnet  - Read and Write Property ",
+        "visState": "{\"title\":\"BACnet  - Read and Write Property \",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":6,\"direction\":\"desc\"},\"showTotal\":false,\"totalFunc\":\"sum\",\"percentageCol\":\"\",\"dimensions\":{\"metrics\":[{\"accessor\":6,\"format\":{\"id\":\"number\"},\"params\":{},\"label\":\"Count\",\"aggType\":\"count\"}],\"buckets\":[{\"accessor\":0,\"format\":{\"id\":\"terms\",\"params\":{\"id\":\"drilldown\",\"otherBucketLabel\":\"Other\",\"missingBucketLabel\":\"Missing\"}},\"params\":{},\"label\":\"Property Value\",\"aggType\":\"terms\"}]}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet_property.object_type\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Object Type\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet.instance_number\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Object Identifier\"}},{\"id\":\"7\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"destination.ip\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":true,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"IP\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet.pdu_service\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"PDU Service\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet_property.property\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Property Type\"}},{\"id\":\"6\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"zeek.bacnet_property.value\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":100,\"otherBucket\":true,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"customLabel\":\"Property Value\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":6,\"direction\":\"desc\"}}}}",
+        "description": "Results from BACnet Read-Property and Write-Property Commands",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+        },
+        "savedSearchRefName": "search_0"
+      },
+      "references": [
+        {
+          "name": "search_0",
+          "type": "search",
+          "id": "ccfe3ca0-c77b-11ea-8578-f3ff6bdd82b2"
+        }
+      ],
+      "migrationVersion": {
+        "visualization": "7.10.0"
+      }
+    },
+    {
+      "id": "00294170-c77b-11ea-8578-f3ff6bdd82b2",
+      "type": "search",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwNiwxXQ==",
+      "attributes": {
+        "title": "BACnet - Logs",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "source.ip",
+          "destination.ip",
+          "zeek.bacnet.bvlc_function",
+          "zeek.bacnet.pdu_type",
+          "zeek.bacnet.pdu_service",
+          "zeek.bacnet.invoke_id"
+        ],
+        "sort": [
+          [
+            "MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER",
+            "desc"
+          ]
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"highlightAll\":false,\"version\":true,\"filter\":[],\"query\":{\"query\":\"event.dataset:bacnet\",\"language\":\"lucene\"},\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "search": "7.9.3"
+      }
+    },
+    {
+      "id": "ccfe3ca0-c77b-11ea-8578-f3ff6bdd82b2",
+      "type": "search",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwNywxXQ==",
+      "attributes": {
+        "title": "BACnet - Property Logs",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "source.ip",
+          "destination.ip",
+          "zeek.bacnet.pdu_service",
+          "zeek.bacnet_property.object_type",
+          "zeek.bacnet.instance_number",
+          "zeek.bacnet_property.property",
+          "zeek.bacnet_property.value"
+        ],
+        "sort": [
+          [
+            "MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER",
+            "desc"
+          ]
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"highlightAll\":false,\"version\":true,\"filter\":[],\"query\":{\"query\":\"event.dataset:bacnet_property\",\"language\":\"lucene\"},\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "search": "7.9.3"
+      }
+    },
+    {
+      "id": "b5300770-c77b-11ea-8578-f3ff6bdd82b2",
+      "type": "search",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwOCwxXQ==",
+      "attributes": {
+        "title": "BACnet - Discovery Logs",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "source.ip",
+          "destination.ip",
+          "zeek.bacnet.pdu_service",
+          "zeek.bacnet_discovery.object_type",
+          "zeek.bacnet.instance_number",
+          "zeek.bacnet_discovery.vendor"
+        ],
+        "sort": [
+          [
+            "MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER",
+            "desc"
+          ]
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"highlightAll\":false,\"version\":true,\"filter\":[],\"query\":{\"query\":\"event.dataset:bacnet_discovery\",\"language\":\"lucene\"},\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "search": "7.9.3"
+      }
+    },
+    {
+      "id": "f28bbce0-25b0-11ee-98b1-ff2b1cf864b8",
+      "type": "search",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T17:46:30.843Z",
+      "version": "WzIwOSwxXQ==",
+      "attributes": {
+        "title": "BACnet Device Control - Logs",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "source.ip",
+          "destination.ip",
+          "event.action",
+          "event.result",
+          "zeek.bacnet.invoke_id",
+          "zeek.uid"
+        ],
+        "sort": [],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"highlightAll\":false,\"version\":true,\"query\":{\"query\":\"event.dataset:bacnet_device_control\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "search": "7.9.3"
+      }
+    },
+    {
+      "id": "065593f0-3257-11ef-8dd5-df3551cbe6ca",
+      "type": "search",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-06-24T18:24:42.158Z",
+      "version": "Wzk4OCwxXQ==",
+      "attributes": {
+        "title": "ACID on ATT&CK for ICS",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "network.protocol",
+          "threat.tactic.name",
+          "threat.technique.name",
+          "zeek.notice.msg",
+          "source.ip",
+          "destination.ip",
+          "event.id"
+        ],
+        "sort": [],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"threat.framework:\\\"MITRE ATT&CK for ICS\\\"\",\"language\":\"lucene\"},\"highlightAll\":false,\"version\":true,\"aggs\":{\"2\":{\"date_histogram\":{\"field\":\"MALCOLM_NETWORK_INDEX_TIME_FIELD_REPLACER\",\"fixed_interval\":\"30d\",\"min_doc_count\":1}}},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+        }
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "MALCOLM_NETWORK_INDEX_PATTERN_REPLACER"
+        }
+      ],
+      "migrationVersion": {
+        "search": "7.9.3"
+      }
+    }
+  ]
+}
