@@ -1,0 +1,76 @@
+services:
+  opensearch:
+    # Reduce OpenSearch JVM heap to 1 GB to cap memory usage
+    environment:
+      OPENSEARCH_JAVA_OPTS: "-server -Xms1g -Xmx1g -Xss256k -XX:-HeapDumpOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom -Dlog4j.formatMsgNoLookups=true"
+    # Optional hard limit to guard accidental growth (supported by docker compose)
+    mem_limit: 2g
+
+  logstash:
+    # Reduce Logstash JVM heap and pipeline concurrency for low-RAM environments
+    environment:
+      LS_JAVA_OPTS: "-server -Xms512m -Xmx512m -Xss2048k -XX:-HeapDumpOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom -Dlog4j.formatMsgNoLookups=true -Dlogstash.pipelinebus.implementation=v1"
+      pipeline.workers: "1"
+      pipeline.batch.size: "50"
+      pipeline.batch.delay: "50"
+      LOGSTASH_OUI_LOOKUP: "false"
+      LOGSTASH_SEVERITY_SCORING: "false"
+      LOGSTASH_NETBOX_ENRICHMENT_DATASETS: ""
+    mem_limit: 1g
+
+  # Trim nginx-proxy dependencies so we don't auto-start every optional service
+  nginx-proxy:
+    depends_on:
+      - api
+      - arkime
+      - dashboards
+
+  dashboards:
+    environment:
+      # Cap Node.js memory usage for OpenSearch Dashboards
+      NODE_OPTIONS: "--max-old-space-size=512"
+    ports:
+      - "5601:5601"
+
+  arkime:
+    environment:
+      # Arkime viewer is Node.js-based; cap its memory as well
+      NODE_OPTIONS: "--max-old-space-size=512"
+
+  # It's fine to keep dashboards-helper as-is; it's lightweight and required by dashboards
+  # No overrides necessary for arkime/dashboards/api beyond dependency trimming above
+
+  # Optionally, explicitly mark heavyweight optional services under a non-default profile
+  # so a plain `up` with this override doesn't pull them in. Uncomment to enforce.
+  keycloak:
+    profiles: ["disabled"]
+  netbox:
+    profiles: ["disabled"]
+  postgres:
+    profiles: ["disabled"]
+  redis:
+    profiles: ["disabled"]
+  redis-cache:
+    profiles: ["disabled"]
+  upload:
+    profiles: ["disabled"]
+  htadmin:
+    profiles: ["disabled"]
+  freq:
+    profiles: ["disabled"]
+  pcap-capture:
+    profiles: ["disabled"]
+  pcap-monitor:
+    profiles: ["disabled"]
+  zeek:
+    profiles: ["disabled"]
+  zeek-live:
+    profiles: ["disabled"]
+  suricata:
+    profiles: ["disabled"]
+  suricata-live:
+    profiles: ["disabled"]
+  file-monitor:
+    profiles: ["disabled"]
+  filebeat:
+    profiles: ["disabled"]
