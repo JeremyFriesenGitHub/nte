@@ -755,7 +755,7 @@ class NetworkAnalyzer {
     openMalcolmApp() {
         // Open Malcolm app in a new tab
         // You can customize this URL to point to your Malcolm instance
-        const malcolmUrl = 'https://localhost:8443'; // Default Malcolm HTTPS port
+        const malcolmUrl = 'https://localhost'; // Default Malcolm HTTPS port
         window.open(malcolmUrl, '_blank', 'noopener,noreferrer');
     }
 }
